@@ -34,20 +34,50 @@ int fib(int n) {
 int main() {
     srand( time(0) );
 
+    int count = 0;
     ofstream file;
     file.open("input.txt");
 
-    file << "500" << endl;
+    file << "654" << endl;
 
     for ( int i = 0; i < 16; ++i ) {
         file << pow(2,i) << ' ';
+        count++;
     }
     file << pow(2,17) - 1 << ' ';
+    count++;
 
     for ( int i = 6; i < 32; ++i ) {
         file << pow(2,17) + fib(i) << ' ';
+        count++;
     }
 
+    int last = 963112;
+    for (int i = 0; i<200; i++){
+        last  = last + (rand()%139) + 23;
+        file << last << ' ';
+        count++;
+    }
+
+    last = 3000000;
+    for (int i = 0; i<200; i++){
+        last  = last + (rand()%289) + 88;
+        file << last << ' ';
+        count++;
+    }
+
+    last = 500000000;
+    for (int i = 1; i<211; i++){
+        last  = last + pow(i,3);
+        file << last << ' ';
+        count++;
+    }
+    file << 999999999;
+    count++;
+
+
+
+    cout << count << endl;
 
 
     file.close();
