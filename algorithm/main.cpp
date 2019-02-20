@@ -9,17 +9,17 @@ using namespace std;
 
 int main() {
 
-    // if Next in input  > 2 * last
-    //  do addition
+    // if next in input > (2 * lastAddition):
+    //     do addition
     // else
-    //  do if (input - last) exists in visited
-    //      then do addiction
+    //     if (input - last) exists in visited
+    //         do addition
     //     else
-    //  do dfind least greatest visited for its different
-    //      if (difference between remainder and last exists in vistied)
-    //          then do addiction
-    //      else check with visited before last
-    
+    //         find least greatest visited for its difference
+    //          if (difference between remainder and last exists in vistied)
+    //              do addition
+    //          else
+    //             check with visited before last
 
     return 0;
 }
