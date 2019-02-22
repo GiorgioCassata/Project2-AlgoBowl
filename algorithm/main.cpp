@@ -63,10 +63,7 @@ int main() {
         } else {
             exists = false;
             for (int j = visited.size()-1; j >= 0; --j) {
-                //cout << visited.at(j) << endl;
-                //cout << (visited.at(j) + lastAddition) << endl;
-                //cout << unvisited.at(i) << endl;
-                if (unvisited.at(i) >= visited.at(j) + lastAddition) {
+                if (unvisited.at(i) == visited.at(j) + lastAddition) {
                     exists = true;
                     indexVis = j;
                     break;
@@ -78,19 +75,10 @@ int main() {
                 lastAddition = lastAddition + visited.at(indexVis);
                 visited.push_back(lastAddition);
             } else {
-                output << lastAddition << ' ' << 1 << endl;
-                cout << lastAddition << endl;
-                lastAddition = lastAddition + 1;
-                visited.push_back(lastAddition);
-                cout << "added 1??" << endl;
-                //cout << "not supposed to happen?" << endl;
-                //return 0;
-            }
-            /*else {
                     //find least greatest visited for its difference
                     exists = false;
                     for (int j = 0; j < visited.size(); ++j) {
-                        if ((unvisited.at(i) - visited.at(j)) == lastAddition){
+                        if (unvisited.at(i) > visited.at(j) + lastAddition){
                             exists = true;
                             indexVis = j;
                             break;
@@ -101,6 +89,7 @@ int main() {
                         cout << lastAddition << endl;
                         lastAddition = lastAddition + visited.at(indexVis);
                         visited.push_back(lastAddition);
+                        continue; // doesnt meet reqs
                     }
                     else {
                         output << lastAddition << ' ' << 1 << endl;
@@ -109,11 +98,11 @@ int main() {
                         visited.push_back(lastAddition);
                     }
 
-            } */
+            }
         }
         i++; //iterate
     }
-    printVect(visited);
+    //printVect(visited);
     input.close();
     output.close();
     return 0;
