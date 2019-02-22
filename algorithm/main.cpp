@@ -77,7 +77,7 @@ int main() {
             } else {
                     //find least greatest visited for its difference
                     exists = false;
-                    for (int j = 0; j < visited.size(); ++j) {
+                    for (int j = visited.size()-1; j >= 0; --j) {
                         if (unvisited.at(i) > visited.at(j) + lastAddition){
                             exists = true;
                             indexVis = j;
