@@ -28,8 +28,10 @@ int main() {
     int numInputs;
     int tempInt;
     int i;
+    int stepCounter = 0;
+
     input.open("input.txt");
-    output.open("output.txt");
+    output.open("temp.txt");
 
     input >> numInputs;
 
@@ -47,6 +49,7 @@ int main() {
     //cout << lastAddition << endl;
     i = 0;
     while (visited.back() < unvisited.back()) { // change this condition because we'll take more steps
+        stepCounter++;
         // prevents skipping numbers
         if (unvisited.at(i) == lastAddition) {
             i++;
@@ -86,14 +89,14 @@ int main() {
                     }
                     if (exists) {
                         output << lastAddition << ' ' << visited.at(indexVis) << endl;
-                        cout << lastAddition << endl;
+                        //cout << lastAddition << endl;
                         lastAddition = lastAddition + visited.at(indexVis);
                         visited.push_back(lastAddition);
                         continue; // doesnt meet reqs
                     }
                     else {
                         output << lastAddition << ' ' << 1 << endl;
-                        cout << lastAddition << endl;
+                        //cout << lastAddition << endl;
                         lastAddition = lastAddition + 1;
                         visited.push_back(lastAddition);
                     }
@@ -103,6 +106,22 @@ int main() {
         i++; //iterate
     }
     //printVect(visited);
+    cout << stepCounter << endl;
+    input.close();
+    output.close();
+
+    //put stepCounter at beginning of output
+    input.open("temp.txt");
+    output.open("output.txt");
+    output << stepCounter << endl;
+    for( int i = 0; i < stepCounter; ++i ) {
+        input >> tempInt;
+        output << tempInt;
+        output << ' ';
+        input >> tempInt;
+        output << tempInt;
+        output << endl;
+    }
     input.close();
     output.close();
     return 0;
