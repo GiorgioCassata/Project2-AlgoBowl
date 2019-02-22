@@ -69,7 +69,7 @@ int main() {
         cout << "is all good" << endl;
     }
 
-    if(unvisited.size() != 0){
+    if(unvisited.size() != 1){ // has to be 1 since it wont be visited otherwise (wasnt actually supposed to be input file whoops!)
         cout << "ERROR: not all inputs visited" << endl;
     }
 
