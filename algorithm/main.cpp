@@ -106,7 +106,7 @@ int main() {
         i++; //iterate
     }
     //printVect(visited);
-    cout << stepCounter << endl;
+    //cout << stepCounter << endl;
     input.close();
     output.close();
 
