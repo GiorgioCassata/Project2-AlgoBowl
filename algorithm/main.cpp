@@ -19,7 +19,7 @@ int main() {
     int i = 0;
     int lastAddition, numInputs, tempInt;
 
-    input.open("input.txt");
+    input.open("input_group92.txt");
     output.open("temp.txt");
 
     input >> numInputs;
@@ -112,7 +112,9 @@ int main() {
 
     // create actual output file
     input.open("temp.txt");
-    output.open("output.txt");
+    output.open("output_group92.txt");
+
+    stepCounter++;
 
     output << stepCounter << endl; //put stepCounter at beginning of actual output
 

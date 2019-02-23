@@ -20,8 +20,8 @@ int main() {
     int first, second;
     bool firstCheck, secondCheck;
 
-    input.open("input.txt");
-    output.open("output.txt");
+    input.open("input_group92.txt");
+    output.open("output_group92.txt");
 
     input >> numInputs;
     //cout << numInputs;
