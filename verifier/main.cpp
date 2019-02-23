@@ -52,7 +52,8 @@ int main() {
             }
         }
         if (!firstCheck || !secondCheck){
-            cout << "ERROR: Not Visited" << endl;
+            cout << "ERROR: Number Used On Line " << counter << " Not Visited " << endl;
+            return 1;
         }
         visited.push_back(first + second);
         for(int i = 0; i<unvisited.size(); i++){
@@ -62,17 +63,20 @@ int main() {
         }
     }
 
-
-
     //check if the number of steps match and each number of the input has been visited
-    if (counter == numSteps) {
-        cout << "is all good" << endl;
+    if (counter != numSteps) {
+        cout << "bad steps" << endl;
+        cout << counter << " instead of " << numSteps << endl;
+        return 1;
     }
 
-    if(unvisited.size() != 1){ // has to be 1 since it wont be visited otherwise (wasnt actually supposed to be input file whoops!)
+    if(unvisited.size() != 0){ // has to be 1 if input starts with 1
+        cout << unvisited.at(0) << endl;
         cout << "ERROR: not all inputs visited" << endl;
+        return 1;
     }
 
+    cout << "ran without problems" << endl;
     input.close();
     output.close();
     return 0;

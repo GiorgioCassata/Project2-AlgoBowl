@@ -7,28 +7,17 @@
 
 using namespace std;
 
-void printVect(vector<int> a) {
-    cout << endl;
-    for (int z = 0; z < a.size(); ++z) {
-        cout << a.at(z) << endl;
-    }
-    cout << endl;
-}
-
 int main() {
     ifstream input;
     ofstream output;
 
-    vector<int> unvisited;
-    vector<int> visited;
+    vector<int> unvisited, visited;
 
     bool exists;
     int indexVis = 0;
-    int lastAddition;
-    int numInputs;
-    int tempInt;
-    int i;
     int stepCounter = 0;
+    int i = 0;
+    int lastAddition, numInputs, tempInt;
 
     input.open("input.txt");
     output.open("temp.txt");
@@ -41,15 +30,28 @@ int main() {
         unvisited.push_back(tempInt);
     }
 
+    // Some files have an extra empty line which causes doubles of the last number
+    // This removes that double if it exists
+    if (unvisited.back() == unvisited.at(numInputs-1)) {
+        unvisited.pop_back();
+    }
+
+    // check size of inputs matches actual size of inputs
+    if (numInputs != unvisited.size()) {
+        cout << "input size Doesnt match: " << unvisited.size() << " instead of " << numInputs << endl;
+        return 1;
+    }
+
     // setup first number (always solves for 2 using 1's)
     visited.push_back(1);
-    lastAddition = 1 + 1; // addition instead of mult for clarification
+    lastAddition = 1 + 1; // actual addition for clarification
     visited.push_back(lastAddition);
     output << 1 << ' ' << 1 << endl;
-    //cout << lastAddition << endl;
-    i = 0;
-    while (visited.back() < unvisited.back()) { // change this condition because we'll take more steps
-        stepCounter++;
+    stepCounter++;
+    // Will loop until the last addition is the same as the last target input
+    while (visited.back() < unvisited.back()) {
+        stepCounter++; // every loop results in an addition step
+
         // prevents skipping numbers
         if (unvisited.at(i) == lastAddition) {
             i++;
@@ -62,8 +64,10 @@ int main() {
             output << lastAddition << ' ' << lastAddition << endl;
             lastAddition = lastAddition + lastAddition;
             visited.push_back(lastAddition);
-            continue; //continue wihtout iterating because this does not always meet an input
+            continue; //continue wihtout iterating because this does not always meet reqs
         } else {
+            // If there exists an addition with a visited number that results in the
+            // next target input, it will always perform that addition
             exists = false;
             for (int j = visited.size()-1; j >= 0; --j) {
                 if (unvisited.at(i) == visited.at(j) + lastAddition) {
@@ -74,11 +78,12 @@ int main() {
             }
             if (exists) {
                 output << lastAddition << ' ' << visited.at(indexVis) << endl;
-                //cout << lastAddition << endl;
                 lastAddition = lastAddition + visited.at(indexVis);
                 visited.push_back(lastAddition);
+                i++;
+                continue;
             } else {
-                    //find least greatest visited for its difference
+                    // find the greatest visited that is a valid addition
                     exists = false;
                     for (int j = visited.size()-1; j >= 0; --j) {
                         if (unvisited.at(i) > visited.at(j) + lastAddition){
@@ -89,32 +94,30 @@ int main() {
                     }
                     if (exists) {
                         output << lastAddition << ' ' << visited.at(indexVis) << endl;
-                        //cout << lastAddition << endl;
                         lastAddition = lastAddition + visited.at(indexVis);
                         visited.push_back(lastAddition);
-                        continue; // doesnt meet reqs
+                        continue; // doesnt always meet reqs to iterate
                     }
                     else {
-                        output << lastAddition << ' ' << 1 << endl;
-                        //cout << lastAddition << endl;
-                        lastAddition = lastAddition + 1;
-                        visited.push_back(lastAddition);
+                        cout << "Hey so like, this wasn't supposed to happen." << endl;
+                        return 1;
                     }
-
             }
         }
-        i++; //iterate
+        //i++; //iterate
     }
-    //printVect(visited);
-    //cout << stepCounter << endl;
+
     input.close();
     output.close();
 
-    //put stepCounter at beginning of output
+    // create actual output file
     input.open("temp.txt");
     output.open("output.txt");
-    output << stepCounter << endl;
-    for( int i = 0; i < stepCounter; ++i ) {
+
+    output << stepCounter << endl; //put stepCounter at beginning of actual output
+
+    // transfer additions to actual output file
+    for( int i = 1; i < stepCounter; ++i ) {
         input >> tempInt;
         output << tempInt;
         output << ' ';
@@ -122,6 +125,7 @@ int main() {
         output << tempInt;
         output << endl;
     }
+
     input.close();
     output.close();
     return 0;
