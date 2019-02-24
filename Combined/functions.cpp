@@ -1,13 +1,86 @@
-#include <cstdlib>
-#include <iostream>
-#include <ctime>
-#include <fstream>
-#include <cmath>
-#include <vector>
+#include "functions.h"
 
-using namespace std;
 
-int main() {
+bool verify(string inFilepath, string outFilepath) {
+    ifstream input;
+    ifstream output;
+    int numSteps;
+    int counter = 0;
+    int tempInt;
+    string tempStr;
+    vector<int> unvisited;
+    vector<int> visited;
+    int  numInputs;
+    int first, second;
+    bool firstCheck, secondCheck;
+
+    input.open(inFilepath);
+    output.open(outFilepath);
+
+    input >> numInputs;
+    output >> numSteps;
+
+    // put all inputs into vector
+    while(!input.eof()) {
+        input >> tempInt;
+        unvisited.push_back(tempInt);
+    }
+
+    // assume 1 since it cant be a sum
+    visited.push_back(1);
+    if (unvisited.front() == 1) {
+        unvisited.erase(unvisited.begin());
+    }
+
+    // for each step, check if the addition is correct and the number has been visited
+    while(!output.eof()) {
+        counter++;
+
+        output >> first;
+        output >> second;
+        firstCheck = false;
+        secondCheck = false;
+
+        for(int i = 0; i<visited.size(); i++){
+            if(visited.at(i) == first){
+                firstCheck = true;
+            }
+            if ( visited.at(i) == second){
+                secondCheck= true;
+            }
+        }
+        if (!firstCheck || !secondCheck){
+            cout << "ERROR: Number Used On Line " << counter << " Not Visited " << endl;
+            return false;
+        }
+
+        visited.push_back(first + second);
+        for(int i = 0; i<unvisited.size(); i++){
+            if(unvisited.at(i) == first + second){
+                unvisited.erase(unvisited.begin() + i);
+            }
+        }
+    }
+
+    //check if the number of steps match and each number of the input has been visited
+    if (counter != numSteps) {
+        cout << "bad steps" << endl;
+        cout << counter << " instead of " << numSteps << endl;
+        return false;
+    }
+
+    if(unvisited.size() != 0){
+        cout << unvisited.at(0) << " " << unvisited.size() << endl;
+        cout << "ERROR: not all inputs visited" << endl;
+        return false;
+    }
+
+    input.close();
+    output.close();
+    return true;
+}
+
+void solve(string inFilepath, string outFilepath) {
     ifstream input;
     ofstream output;
 
@@ -20,7 +93,7 @@ int main() {
     int i = 0;
     int lastAddition, numInputs, tempInt;
 
-    input.open("input_group74.txt");
+    input.open(inFilepath);
     output.open("temp.txt");
 
     input >> numInputs;
@@ -40,7 +113,7 @@ int main() {
     // check size of inputs matches actual size of inputs
     if (numInputs != unvisited.size()) {
         cout << "input size Doesnt match: " << unvisited.size() << " instead of " << numInputs << endl;
-        return 1;
+        return;
     }
 
     // setup first number (always solves for 2 using 1's)
@@ -49,6 +122,9 @@ int main() {
     visited.push_back(lastAddition);
     output << 1 << ' ' << 1 << endl;
     stepCounter++;
+    if (unvisited.front() == 1) {
+        unvisited.erase(unvisited.begin());
+    }
     if (unvisited.front() == 2) {
         extraLine = true;
     }
@@ -119,8 +195,9 @@ int main() {
                         continue; // doesnt always meet reqs to iterate
                     }
                     else {
+                        cout << lastAddition << ' ' << unvisited.at(i) << endl;
                         cout << "Hey so like, this wasn't supposed to happen." << endl;
-                        return 1;
+                        return;
                     }
             }
         }
@@ -132,7 +209,7 @@ int main() {
 
     // create actual output file
     input.open("temp.txt");
-    output.open("output_group74.txt");
+    output.open(outFilepath);
 
     if (!extraLine) {
         stepCounter++;
@@ -152,5 +229,5 @@ int main() {
 
     input.close();
     output.close();
-    return 0;
+    return;
 }
