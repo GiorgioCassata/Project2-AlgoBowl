@@ -2,15 +2,13 @@
 
 
 bool verify(string inFilepath, string outFilepath) {
-    ifstream input;
-    ifstream output;
-    int numSteps;
+    ifstream input, output;
     int counter = 0;
     int tempInt;
     string tempStr;
     vector<int> unvisited;
     vector<int> visited;
-    int  numInputs;
+    int  numInputs, numSteps;
     int first, second;
     bool firstCheck, secondCheck;
 
@@ -42,10 +40,10 @@ bool verify(string inFilepath, string outFilepath) {
         secondCheck = false;
 
         for(int i = 0; i<visited.size(); i++){
-            if(visited.at(i) == first){
+            if( visited.at(i) == first ) {
                 firstCheck = true;
             }
-            if ( visited.at(i) == second){
+            if ( visited.at(i) == second ) {
                 secondCheck= true;
             }
         }
@@ -54,21 +52,23 @@ bool verify(string inFilepath, string outFilepath) {
             return false;
         }
 
+        // erase the input value corresponding to the new sum
         visited.push_back(first + second);
-        for(int i = 0; i<unvisited.size(); i++){
-            if(unvisited.at(i) == first + second){
+        for( int i = 0; i < unvisited.size(); i++ ) {
+            if(unvisited.at(i) == first + second) {
                 unvisited.erase(unvisited.begin() + i);
             }
         }
     }
 
-    //check if the number of steps match and each number of the input has been visited
+    // check if the number of steps match
     if (counter != numSteps) {
         cout << "bad steps" << endl;
         cout << counter << " instead of " << numSteps << endl;
         return false;
     }
 
+    // check that each number of the input has been visited
     if(unvisited.size() != 0){
         cout << unvisited.at(0) << " " << unvisited.size() << endl;
         cout << "ERROR: not all inputs visited" << endl;
@@ -80,7 +80,7 @@ bool verify(string inFilepath, string outFilepath) {
     return true;
 }
 
-void solve(string inFilepath, string outFilepath) {
+int solve(string inFilepath, string outFilepath) {
     ifstream input;
     ofstream output;
 
@@ -113,7 +113,7 @@ void solve(string inFilepath, string outFilepath) {
     // check size of inputs matches actual size of inputs
     if (numInputs != unvisited.size()) {
         cout << "input size Doesnt match: " << unvisited.size() << " instead of " << numInputs << endl;
-        return;
+        return -1;
     }
 
     // setup first number (always solves for 2 using 1's)
@@ -197,7 +197,7 @@ void solve(string inFilepath, string outFilepath) {
                     else {
                         cout << lastAddition << ' ' << unvisited.at(i) << endl;
                         cout << "Hey so like, this wasn't supposed to happen." << endl;
-                        return;
+                        return -1;
                     }
             }
         }
@@ -229,5 +229,5 @@ void solve(string inFilepath, string outFilepath) {
 
     input.close();
     output.close();
-    return;
+    return stepCounter;
 }

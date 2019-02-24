@@ -11,6 +11,6 @@
 using namespace std;
 
 bool verify(string inFilepath, string outFilepath);
-void solve(string inFilepath, string outFilepath);
+int solve(string inFilepath, string outFilepath);
 
 #endif /* end of include guard: _FUNCTIONS_H */
