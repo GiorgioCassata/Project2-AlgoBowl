@@ -60,7 +60,7 @@ bool verify(string inFilepath, string outFilepath) {
             }
         }
     }
-
+    counter--;
     // check if the number of steps match
     if (counter != numSteps) {
         cout << "bad steps" << endl;
@@ -215,7 +215,7 @@ int solve(string inFilepath, string outFilepath) {
         stepCounter++;
     }
 
-    output << stepCounter << endl; //put stepCounter at beginning of actual output
+    output << stepCounter-1 << endl; //put stepCounter at beginning of actual output
 
     // transfer additions to actual output file
     for( int i = 1; i < stepCounter; ++i ) {
@@ -229,5 +229,5 @@ int solve(string inFilepath, string outFilepath) {
 
     input.close();
     output.close();
-    return stepCounter;
+    return stepCounter-1;
 }
