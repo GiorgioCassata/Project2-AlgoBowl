@@ -162,7 +162,7 @@ int solve(string inFilepath, string outFilepath) {
                 visited.push_back(lastAddition);
                 i++;
                 continue;
-            }
+            }/*
             exists = false;
             for (int j = visited.size()-1; j >= 0; --j) {
                 if (unvisited.at(i) == visited.at(j) + visited.at(j) && visited.at(j) + visited.at(j) > lastAddition) {
@@ -177,7 +177,7 @@ int solve(string inFilepath, string outFilepath) {
                 visited.push_back(lastAddition);
                 i++;
                 continue;
-            }
+            }*/
             else {
                     // find the greatest visited that is a valid addition
                     exists = false;
